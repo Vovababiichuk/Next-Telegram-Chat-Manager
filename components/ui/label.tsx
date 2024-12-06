@@ -1,14 +1,8 @@
-// Label component extends from shadcnui - https://ui.shadcn.com/docs/components/label
-
 'use client';
 
 import * as LabelPrimitive from '@radix-ui/react-label';
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-
-// Label component extends from shadcnui - https://ui.shadcn.com/docs/components/label
-
-// Label component extends from shadcnui - https://ui.shadcn.com/docs/components/label
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
@@ -23,6 +17,7 @@ const Label = React.forwardRef<
     {...props}
   />
 ));
+
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };
