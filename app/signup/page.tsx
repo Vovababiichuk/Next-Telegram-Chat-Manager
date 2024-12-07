@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { BriefcaseBusiness } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { HeroHighlightPage } from "@/components/HeroHighlightPage";
-import { socialMedia } from "@/data";
+import { BriefcaseBusiness } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { HeroHighlightPage } from '@/components/HeroHighlightPage';
+import { socialMedia } from '@/data';
 
 export default function SignUpPage() {
   return (

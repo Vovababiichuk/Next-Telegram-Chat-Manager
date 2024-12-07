@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Form } from "@/components/Form";
-import { HeroHighlight, Highlight } from "./ui/HeroHighlight";
-import { motion } from "framer-motion";
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Form } from '@/components/Form';
+import { HeroHighlight, Highlight } from './ui/HeroHighlight';
+import { motion } from 'framer-motion';
 
 export function HeroHighlightPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === "/signup") {
+    if (pathname === '/signup') {
       setIsSignUp(true);
     } else {
       setIsSignUp(false);
@@ -39,14 +39,14 @@ export function HeroHighlightPage() {
         >
           {isSignUp ? (
             <>
-              Create an account{" "}
+              Create an account{' '}
               <Highlight className="text-black dark:text-white">
                 to get started!
               </Highlight>
             </>
           ) : (
             <>
-              Login to your account{" "}
+              Login to your account{' '}
               <Highlight className="text-black dark:text-white">
                 to continue
               </Highlight>

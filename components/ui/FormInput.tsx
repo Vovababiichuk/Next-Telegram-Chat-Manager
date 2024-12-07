@@ -1,7 +1,7 @@
-"use client";
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
+'use client';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { useMotionTemplate, useMotionValue, motion } from 'framer-motion';
 
 type AnimatedStyle = React.CSSProperties & {
   background?: string | ReturnType<typeof useMotionTemplate>;
@@ -25,7 +25,7 @@ const Input = React.forwardRef<
 
   const backgroundStyle = useMotionTemplate`
   radial-gradient(
-    ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
+    ${visible ? radius + 'px' : '0px'} circle at ${mouseX}px ${mouseY}px,
     var(--blue-500),
     transparent 80%
   )
@@ -57,6 +57,6 @@ const Input = React.forwardRef<
     </motion.div>
   );
 });
-Input.displayName = "Input";
+Input.displayName = 'Input';
 
 export default Input;

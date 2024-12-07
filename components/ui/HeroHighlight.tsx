@@ -1,7 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
-import React from "react";
+'use client';
+import { cn } from '@/lib/utils';
+import { useMotionValue, motion, useMotionTemplate } from 'framer-motion';
+import React from 'react';
 
 export const HeroHighlight = ({
   children,
@@ -29,7 +29,7 @@ export const HeroHighlight = ({
   return (
     <div
       className={cn(
-        "relative h-[40rem] flex items-center bg-white dark:bg-black justify-center w-full group",
+        'relative h-[40rem] flex items-center bg-white dark:bg-black justify-center w-full group',
         containerClassName
       )}
       onMouseMove={handleMouseMove}
@@ -56,7 +56,7 @@ export const HeroHighlight = ({
         }}
       />
 
-      <div className={cn("relative z-20", className)}>{children}</div>
+      <div className={cn('relative z-20', className)}>{children}</div>
     </div>
   );
 };
@@ -71,20 +71,20 @@ export const Highlight = ({
   return (
     <motion.span
       initial={{
-        backgroundSize: "0% 100%",
+        backgroundSize: '0% 100%',
       }}
       animate={{
-        backgroundSize: "100% 100%",
+        backgroundSize: '100% 100%',
       }}
       transition={{
         duration: 2,
-        ease: "linear",
+        ease: 'linear',
         delay: 0.5,
       }}
       style={{
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "left center",
-        display: "inline",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'left center',
+        display: 'inline',
       }}
       //@ts-expect-error fixme
       className={cn(

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { LogIn, User } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import MagicButton from "./MagicButton";
-import { Spotlight } from "./ui/Spotlight";
-import { TextGenerateEffect } from "./ui/TextGenerateEffect";
+import { LogIn, User } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import MagicButton from './MagicButton';
+import { Spotlight } from './ui/Spotlight';
+import { TextGenerateEffect } from './ui/TextGenerateEffect';
 
 const Hero = () => {
   return (
