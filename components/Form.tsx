@@ -3,8 +3,8 @@
 import Link from "next/link";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Label } from "./ui/label";
-import Input from "./ui/input";
+import { Label } from "./ui/FormLabel";
+import Input from "./ui/FormInput";
 
 export function Form({ isSignUp }: { isSignUp: boolean }) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

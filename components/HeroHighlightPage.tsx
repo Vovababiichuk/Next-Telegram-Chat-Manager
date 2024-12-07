@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Form } from "@/components/Form";
-import { HeroHighlight, Highlight } from "./ui/hero-highlight.tsx";
+import { HeroHighlight, Highlight } from "./ui/HeroHighlight";
 import { motion } from "framer-motion";
 
 export function HeroHighlightPage() {
