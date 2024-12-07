@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Label } from './ui//Label';
+import { Label } from './ui/Label';
 import { Input } from './ui/Input';
 
 export function Form({ isSignUp }: { isSignUp: boolean }) {
