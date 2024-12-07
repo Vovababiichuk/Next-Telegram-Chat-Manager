@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React from "react";
 
 const MagicButton = ({
   title,
@@ -23,9 +25,9 @@ const MagicButton = ({
       <span
         className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-slate-950 px-7 text-sm font-medium text-white backdrop-blur-3xl gap-2 ${otherClasses} group-hover:bg-slate-900 group-hover:text-purple group-hover:shadow-lg transition-all duration-300`}
       >
-        {position === 'left' && icon}
+        {position === "left" && icon}
         {title}
-        {position === 'right' && icon}
+        {position === "right" && icon}
       </span>
     </button>
   );

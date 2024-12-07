@@ -1,16 +1,24 @@
-import { LogIn, User } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import MagicButton from './MagicButton';
-import { Spotlight } from './ui/Spotlight';
-import { TextGenerateEffect } from './ui/TextGenerateEffect';
+"use client";
+
+import { LogIn, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import MagicButton from "./MagicButton";
+import { Spotlight } from "./ui/Spotlight";
+import { TextGenerateEffect } from "./ui/TextGenerateEffect";
 
 const Hero = () => {
   return (
     <div className="pb-20 pt-40 h-screen">
       <div>
-        <Spotlight className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="white" />
-        <Spotlight className="h-[80vh] w-[50vw] top-10 left-full" fill="purple" />
+        <Spotlight
+          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+          fill="white"
+        />
+        <Spotlight
+          className="h-[80vh] w-[50vw] top-10 left-full"
+          fill="purple"
+        />
         <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="blue" />
       </div>
 
