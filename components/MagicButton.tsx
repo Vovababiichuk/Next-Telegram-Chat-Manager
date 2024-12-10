@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const MagicButton = ({
+export const MagicButton = ({
   title,
   icon,
   position,
@@ -32,5 +32,3 @@ const MagicButton = ({
     </button>
   );
 };
-
-export default MagicButton;

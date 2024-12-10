@@ -1,15 +1,87 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
-import Input from './ui/FormInput';
-import { cn } from '@/lib/utils';
-import { Label } from './ui/FormLabel';
+import React, { useState } from 'react';
+import Input from './ui/form-input';
+import { cn, setTokenToLocalStorage, validateForm } from '@/utils/utils';
+import { Label } from './ui/form-label';
+import { ClipLoader } from 'react-spinners';
+import { register, login } from '../gateways/auth';
+import { IUserData, IErrors } from '../types/types';
+import confetti from 'canvas-confetti';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/redux/store/store';
+import { loginAction } from '@/redux/store/user/userSlice';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { triggerConfetti } from '@/utils/confettiEffect';
 
-export function Form({ isSignUp }: { isSignUp: boolean }) {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
+  const [formData, setFormData] = useState<IUserData>({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState<IErrors>({});
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
+
+    const validationResult = validateForm(formData, isSignUp);
+
+    if (!validationResult.valid) {
+      setErrors({ global: validationResult.message });
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
+
+    try {
+      let response;
+      const { name, ...loginData } = formData;
+      if (isSignUp) {
+        response = await register(formData);
+        router.push('/signin');
+        toast.success('Registration successful! Please log in.');
+      } else {
+        response = await login(loginData);
+
+        if (response) {
+          console.log('response', response);
+          setTokenToLocalStorage('token', response.token);
+          dispatch(loginAction(response));
+
+          router.push('/profile');
+          toast.success('Login successful!');
+
+          triggerConfetti();
+        }
+      }
+    } catch (err: any) {
+      console.log('err', err);
+
+      const serverMessage = err.response?.data?.message;
+
+      if (serverMessage) {
+        toast.error(serverMessage);
+      } else {
+        toast.error('An unexpected error occurred!.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,31 +90,70 @@ export function Form({ isSignUp }: { isSignUp: boolean }) {
         {isSignUp && (
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
             <LabelInputContainer>
-              <Label htmlFor="firstname">First name</Label>
-              <Input id="firstname" placeholder="Tyler" type="text" />
-            </LabelInputContainer>
-            <LabelInputContainer>
-              <Label htmlFor="lastname">Last name</Label>
-              <Input id="lastname" placeholder="Durden" type="text" />
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                placeholder="Tyler"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+              />
+              {errors.name && (
+                <div className="text-red-500 text-sm">{errors.name}</div>
+              )}
             </LabelInputContainer>
           </div>
         )}
 
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input
+            id="email"
+            placeholder="projectmayhem@fc.com"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && (
+            <div className="text-red-500 text-sm">{errors.email}</div>
+          )}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input
+            id="password"
+            placeholder="••••••••"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {errors.password && (
+            <div className="text-red-500 text-sm">{errors.password}</div>
+          )}
         </LabelInputContainer>
 
+        {errors.global && (
+          <div className="text-red-500 mb-4">{errors.global}</div>
+        )}
+
         <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          className={cn(
+            'bg-gradient-to-br relative group/btn from-black to-neutral-600 flex justify-center items-center w-full text-white rounded-md h-10 font-medium shadow-md',
+            loading && 'opacity-50 cursor-not-allowed',
+          )}
           type="submit"
+          disabled={loading}
         >
-          {isSignUp ? 'Sign up ' : 'Sign in '}
-          &rarr;
+          {loading ? (
+            <div className="flex justify-center items-center w-full h-full">
+              <ClipLoader color="#ffffff" loading={loading} size={24} />
+            </div>
+          ) : (
+            <>
+              {isSignUp ? 'Sign up' : 'Sign in'}
+              &rarr;
+            </>
+          )}
           <BottomGradient />
         </button>
 
@@ -62,7 +173,7 @@ export function Form({ isSignUp }: { isSignUp: boolean }) {
       </form>
     </div>
   );
-}
+};
 
 const BottomGradient = () => {
   return (

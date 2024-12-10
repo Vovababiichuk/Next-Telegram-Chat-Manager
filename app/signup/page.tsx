@@ -3,12 +3,12 @@
 import { BriefcaseBusiness } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HeroHighlightPage } from '@/components/HeroHighlightPage';
+import HeroHighlightPage from '@/components/HeroHighlightWrap';
 import { socialMedia } from '@/data';
 
-export default function SignUpPage() {
+const SignUpPage = () => {
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-screen w-full overflow-hidden">
       <div className="absolute top-6 left-10 z-50 flex justify-between items-center">
         <Link href="/" className="hover:scale-110 transition-all duration-300">
           <Image src="/logo-chat.svg" alt="logo" width={80} height={80} />
@@ -40,4 +40,6 @@ export default function SignUpPage() {
       <HeroHighlightPage />
     </div>
   );
-}
+};
+
+export default SignUpPage;
