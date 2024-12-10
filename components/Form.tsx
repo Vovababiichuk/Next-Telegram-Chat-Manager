@@ -3,18 +3,21 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Input from './ui/form-input';
-import { cn, setTokenToLocalStorage, validateForm } from '@/utils/utils';
+import { cn, validateForm } from '@/utils/utils';
 import { Label } from './ui/form-label';
 import { ClipLoader } from 'react-spinners';
 import { register, login } from '../gateways/auth';
 import { IUserData, IErrors } from '../types/types';
-import confetti from 'canvas-confetti';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store/store';
 import { loginAction } from '@/redux/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { triggerConfetti } from '@/utils/confettiEffect';
+import {
+  setNameToLocalStorage,
+  setTokenToLocalStorage,
+} from '@/utils/localStorage';
 
 export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
   const [formData, setFormData] = useState<IUserData>({
@@ -53,15 +56,18 @@ export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
       const { name, ...loginData } = formData;
       if (isSignUp) {
         response = await register(formData);
-        router.push('/signin');
-        toast.success('Registration successful! Please log in.');
+        if (response) {
+          setNameToLocalStorage('name', response.user.name);
+
+          router.push('/signin');
+          toast.success('Registration successful! Please log in.');
+        }
       } else {
         response = await login(loginData);
 
         if (response) {
-          console.log('response', response);
           setTokenToLocalStorage('token', response.token);
-          dispatch(loginAction(response));
+          dispatch(loginAction(response.user));
 
           router.push('/profile');
           toast.success('Login successful!');

@@ -6,12 +6,14 @@ import { Form } from '@/components/Form';
 import { HeroHighlight, Highlight } from './ui/hero-highlight';
 import { motion } from 'framer-motion';
 import { MenuPanel } from './MenuPanel';
+import { getNameFromLocalStorage } from '@/utils/localStorage';
 
 const HeroHighlightPage = () => {
   const [content, setContent] = useState<'signup' | 'profile' | 'login'>(
     'login',
   );
   const [isLoaded, setIsLoaded] = useState(false);
+  const [name, setName] = useState<string>('');
   const pathname = usePathname();
 
   useEffect(() => {
@@ -23,6 +25,9 @@ const HeroHighlightPage = () => {
       setContent('login');
     }
     setIsLoaded(true);
+
+    const storedName = getNameFromLocalStorage();
+    setName(storedName);
   }, [pathname]);
 
   if (!isLoaded) {
@@ -56,12 +61,14 @@ const HeroHighlightPage = () => {
             </>
           )}
           {content === 'profile' && (
-            <>
-              Welcome to your{' '}
+            <div className="text-[40px]">
+              👋 Hello,{' '}
+              <span className="text-blueSecond underline">{name}</span>! Welcome
+              to your{' '}
               <Highlight className="text-black dark:text-white">
                 Profile
               </Highlight>
-            </>
+            </div>
           )}
           {content === 'login' && (
             <>
