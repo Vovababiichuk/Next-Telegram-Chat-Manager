@@ -9,27 +9,28 @@ export default function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const getTokenFromLocalStorage = (): string | null => {
-      if (typeof window === 'undefined') {
-        return null; // localStorage недоступний на сервері
-      }
-      return localStorage.getItem('token');
-    };
-
-    const token = getTokenFromLocalStorage();
-
-    if (!token) {
-      toast.error('You need to be logged in to access this page.');
-      redirect('/signin?error=You must log in to access this page.');
-    } else {
-      setIsLoading(false);
-    }
+    setIsClient(true); // Вказує, що ми на клієнті
   }, []);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isClient) {
+      const getTokenFromLocalStorage = (): string | null => {
+        return localStorage.getItem('token');
+      };
+
+      const token = getTokenFromLocalStorage();
+
+      if (!token) {
+        toast.error('You need to be logged in to access this page.');
+        redirect('/signin?error=You must log in to access this page.');
+      }
+    }
+  }, [isClient]);
+
+  if (!isClient) {
     return (
       <div className="flex justify-center items-center h-screen">
         Loading...
