@@ -62,13 +62,13 @@ export const MenuPanel = () => {
       ),
       href: '#',
     },
-    {
-      title: 'Delete Account',
-      icon: (
-        <IconSquareX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: '#',
-    },
+    // {
+    //   title: 'Delete Account',
+    //   icon: (
+    //     <IconSquareX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+    //   ),
+    //   href: '#',
+    // },
   ];
 
   return (

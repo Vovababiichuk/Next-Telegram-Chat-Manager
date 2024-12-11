@@ -6,8 +6,7 @@ import { Form } from '@/components/Form';
 import { HeroHighlight, Highlight } from './ui/hero-highlight';
 import { motion } from 'framer-motion';
 import { MenuPanel } from './MenuPanel';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store/store';
+import { getNameFromLocalStorage } from '@/utils/localStorage';
 
 const HeroHighlightPage = () => {
   const [content, setContent] = useState<'signup' | 'profile' | 'login'>(
@@ -15,8 +14,8 @@ const HeroHighlightPage = () => {
   );
   const [isLoaded, setIsLoaded] = useState(false);
   const pathname = usePathname();
-  const { user } = useSelector((state: RootState) => state.user);
-  const userName = user ? user.name : '';
+
+  const name = getNameFromLocalStorage();
 
   useEffect(() => {
     if (pathname === '/signup') {
@@ -35,7 +34,7 @@ const HeroHighlightPage = () => {
 
   return (
     <HeroHighlight containerClassName="h-screen">
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16 mr-10">
         <motion.h1
           initial={{
             opacity: 0,
@@ -61,9 +60,8 @@ const HeroHighlightPage = () => {
           )}
           {content === 'profile' && (
             <div className="text-[40px]">
-              👋 Hello,{' '}
-              <span className="text-blueSecond underline">{userName}</span>!
-              Welcome to your{' '}
+              👋 Hello, <span className="text-blueSecond">{name}</span>! Welcome
+              to your{' '}
               <Highlight className="text-black dark:text-white">
                 Profile
               </Highlight>

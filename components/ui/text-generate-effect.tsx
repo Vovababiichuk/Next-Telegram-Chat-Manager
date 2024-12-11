@@ -33,7 +33,6 @@ export const TextGenerateEffect = ({
           return (
             <motion.span
               key={word + idx}
-              //@ts-expect-error fixme
               className={` ${
                 idx > 3 ? 'text-purple' : 'dark:text-white text-black'
               } opacity-0`}
