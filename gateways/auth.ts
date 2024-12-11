@@ -25,7 +25,7 @@ export const login = async (data: IUserData): Promise<IResponseUserData> => {
 
 export const getProfile = async (): Promise<IUser> => {
   try {
-    const { data } = await api.get<IUser>('auth/profile');
+    const { data } = await api.get<IUser>('/auth/profile');
     if (!data) {
       throw new Error('Profile data is missing');
     }

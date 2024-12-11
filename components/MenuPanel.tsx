@@ -2,9 +2,6 @@
 
 import React from 'react';
 import { FloatingDock } from './ui/floating-dock';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-// import { toast } from 'react-toastify';
 
 import {
   IconHome,
@@ -16,29 +13,8 @@ import {
   IconSettings,
   IconPaywall,
 } from '@tabler/icons-react';
-import { on } from 'events';
 
 export const MenuPanel = () => {
-  const [redirected, setRedirected] = useState(false);
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const accessToken = Cookies.get('accessToken');
-  //     const refreshToken = Cookies.get('refreshToken');
-
-  //     if (!accessToken || !refreshToken) {
-  //       router.push('/');
-
-  //       if (!redirected) {
-  //         console.log('!redirected!redirected');
-  //         toast.error('You must be logged in to access this page.');
-  //         setRedirected(true);
-  //       }
-  //     }
-  //   }
-  // }, []);
-
   const links = [
     {
       title: 'Home',
@@ -87,7 +63,7 @@ export const MenuPanel = () => {
       href: '#',
     },
     {
-      title: 'Deactivate Account',
+      title: 'Delete Account',
       icon: (
         <IconSquareX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),

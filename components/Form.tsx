@@ -10,7 +10,7 @@ import { register, login } from '../gateways/auth';
 import { IUserData, IErrors } from '../types/types';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store/store';
-import { loginAction } from '@/redux/store/user/userSlice';
+import { loginAction, registerAction } from '@/redux/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { triggerConfetti } from '@/utils/confettiEffect';
@@ -58,7 +58,7 @@ export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
         response = await register(formData);
         if (response) {
           setNameToLocalStorage('name', response.user.name);
-
+          dispatch(registerAction(response));
           router.push('/signin');
           toast.success('Registration successful! Please log in.');
         }
@@ -67,7 +67,6 @@ export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
 
         if (response) {
           setTokenToLocalStorage('token', response.token);
-          dispatch(loginAction(response.user));
 
           router.push('/profile');
           toast.success('Login successful!');

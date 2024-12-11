@@ -3,34 +3,40 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { IUser } from '@/types/types';
+import { IResponseUserData, IUser } from '@/types/types';
 
 interface UserState {
   user: IUser | null;
   isAuth: boolean;
+  isRegister: boolean;
+  token: string | null;
 }
 
 const initialState: UserState = {
   user: null,
   isAuth: false,
+  isRegister: false,
+  token: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginAction: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+    registerAction: (state, action: PayloadAction<IResponseUserData>) => {
+      state.user = action.payload.user;
+      state.isRegister = true;
+    },
+    loginAction: (state) => {
       state.isAuth = true;
     },
     logoutAction: (state) => {
       state.isAuth = false;
-      state.user = null;
     },
   },
 });
 
-export const { loginAction, logoutAction } = userSlice.actions;
+export const { loginAction, logoutAction, registerAction } = userSlice.actions;
 
 export const selectCount = (state: RootState) => state.user;
 

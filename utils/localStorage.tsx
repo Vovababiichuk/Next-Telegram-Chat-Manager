@@ -20,6 +20,10 @@ export const getNameFromLocalStorage = (): string => {
   return data || '';
 };
 
+export const removeNameFromLocalStorage = (key: string): void => {
+  localStorage.removeItem(key);
+};
+
 export const removeTokenFromLocalStorage = (key: string): void => {
   localStorage.removeItem(key);
 };

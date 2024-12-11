@@ -16,14 +16,6 @@ export const VALIDATION_ERRORS = {
   NAME_LENGTH: 'Name must be at least 4 characters long',
 };
 
-export const SERVER_ERRORS = {
-  400: 'Invalid request. Please check your input.',
-  401: 'Invalid credentials. Please check your email and password.',
-  403: 'You do not have permission to perform this action.',
-  404: 'The requested resource was not found.',
-  500: 'Internal server error. Please try again later.',
-};
-
 export const validateForm = (formData: IUserData, isSignUp: boolean) => {
   const { name, email, password } = formData;
 

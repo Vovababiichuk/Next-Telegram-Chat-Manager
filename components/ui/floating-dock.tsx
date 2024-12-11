@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/utils';
 import { IconLayoutNavbarCollapse } from '@tabler/icons-react';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -15,7 +15,13 @@ import {
 } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-// import { logout, deleteAccount } from '../../gateways/auth';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux/store/store';
+import { logoutAction } from '@/redux/store/user/userSlice';
+import {
+  removeNameFromLocalStorage,
+  removeTokenFromLocalStorage,
+} from '@/utils/localStorage';
 
 export const FloatingDock = ({
   items,
@@ -125,6 +131,8 @@ function IconContainer({
   icon: React.ReactNode;
   href: string;
 }) {
+  const [hovered, setHovered] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   let ref = useRef<HTMLDivElement>(null);
@@ -167,38 +175,30 @@ function IconContainer({
     damping: 12,
   });
 
-  const [hovered, setHovered] = useState(false);
-
-  // const handleLogout = async () => {
-  //   if (title === 'Log out') {
-  //     try {
-  //       console.log('Logging out...');
-  //       // await logout();
-  //       toast.success('Logged out successfully.');
-  //       router.push('/signin');
-  //     } catch (error) {
-  //       console.error('Logout failed:', error);
-  //       toast.error('Failed to log out. Please try again.');
-  //     }
-  //   } else if (title === 'Deactivate Account') {
-  //     try {
-  //       console.log('Deleting account...');
-  //       // await deleteAccount();
-  //       toast.success('Account deleted successfully.');
-  //       router.push('/');
-  //     } catch (error) {
-  //       console.error('Account deletion failed:', error);
-  //       toast.error('Failed to delete account. Please try again.');
-  //     }
-  //   }
-  // };
-
-  //! ADD FOR Link onClick(handleLogout)!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //! ADD FOR Link onClick(handleLogout)!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //! ADD FOR Link onClick(handleLogout)!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const handleLogout = async () => {
+    if (title === 'Log out') {
+      try {
+        dispatch(logoutAction());
+        removeTokenFromLocalStorage('token');
+        router.push('/signin');
+        toast.success('You logged out.');
+      } catch (error) {
+        console.error('Logout failed:', error);
+        toast.error('Failed to log out. Please try again.');
+      }
+    } else if (title === 'Home') {
+      router.push('/');
+    }
+  };
 
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      onClick={(e) => {
+        e.preventDefault();
+        handleLogout();
+      }}
+    >
       <motion.div
         ref={ref}
         style={{ width, height }}
