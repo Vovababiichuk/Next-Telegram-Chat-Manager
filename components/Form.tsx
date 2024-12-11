@@ -10,7 +10,7 @@ import { register, login } from '../gateways/auth';
 import { IUserData, IErrors } from '../types/types';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store/store';
-import { loginAction, registerAction } from '@/redux/store/user/userSlice';
+import { registerAction } from '@/redux/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { triggerConfetti } from '@/utils/confettiEffect';
@@ -54,6 +54,7 @@ export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
     try {
       let response;
       const { name, ...loginData } = formData;
+      console.log(name);
       if (isSignUp) {
         response = await register(formData);
         if (response) {
@@ -74,16 +75,11 @@ export const Form = ({ isSignUp }: { isSignUp: boolean }) => {
           triggerConfetti();
         }
       }
-    } catch (err: any) {
-      console.log('err', err);
-
-      const serverMessage = err.response?.data?.message;
-
-      if (serverMessage) {
-        toast.error(serverMessage);
-      } else {
-        toast.error('An unexpected error occurred!.');
-      }
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      const serverMessage =
+        error.response?.data?.message || 'An unexpected error occurred!';
+      toast.error(serverMessage);
     } finally {
       setLoading(false);
     }

@@ -8,8 +8,6 @@ import {
   IconNewSection,
   IconMessage,
   IconLayoutSidebarRightExpand,
-  IconBriefcase,
-  IconSquareX,
   IconSettings,
   IconPaywall,
 } from '@tabler/icons-react';

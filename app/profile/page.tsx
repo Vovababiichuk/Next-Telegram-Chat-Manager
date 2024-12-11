@@ -2,7 +2,6 @@
 
 import HeroHighlightPage from '@/components/HeroHighlightWrap';
 import { getProfile } from '@/gateways/auth';
-import { getTokenFromLocalStorage } from '@/utils/localStorage';
 
 import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';

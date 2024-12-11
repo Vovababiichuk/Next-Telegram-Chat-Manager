@@ -2,7 +2,7 @@ export const socialMedia = [
   {
     id: 1,
     img: '/git.svg',
-    link: 'https://github.com/Vovababiichuk',
+    link: 'https://github.com/Vovababiichuk/Next-Telegram-Chat-Manager',
   },
   {
     id: 2,

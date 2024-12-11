@@ -38,7 +38,6 @@ const Input = React.forwardRef<
           background: backgroundStyle,
         } as AnimatedStyle
       }
-      //@ts-expect-error fixme
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
